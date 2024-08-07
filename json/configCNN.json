@@ -1,0 +1,11 @@
+{
+    "name": "CNN",
+    "name_excel": "CNN.xlsx",
+    "actions": [
+        {"action": "get", "url": "https://cnnespanol.cnn.com"},
+        {"action": "extract", "table": {"by": "css", "value": "div.row.dp_zn0"}, "row": "article.news.news--box.news--box-style-two.news--summary.news--summary-destacado.news--105x60.news--with-border-bottom.post-type--post", "cells": [
+            {"name": "Titulo", "selector": "span.news__label"},
+            {"name": "Descripcion", "selector": "h2.news__title"}
+        ]}
+    ]
+}

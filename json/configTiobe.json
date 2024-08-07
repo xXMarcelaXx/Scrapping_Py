@@ -1,0 +1,12 @@
+{
+    "name": "Tiobe",
+    "name_excel": "Tiobe.xlsx",
+    "actions": [
+        {"action": "get", "url": "https://www.tiobe.com/tiobe-index/"},
+        {"action": "extract", "table": {"by": "css", "value": "table.table-striped.table-top20"}, "row": "tbody tr", "cells": [
+            {"name": "Rank", "selector": "td:nth-child(1)"},
+            {"name": "Programming Language", "selector": "td:nth-child(4)"},
+            {"name": "Ratings", "selector": "td:nth-child(5)"}
+        ]}
+    ]
+}

@@ -1,0 +1,20 @@
+{
+    "name": "Ebay",
+    "name_excel": "Ebay.xlsx",
+    "actions": [
+        {"action": "get", "url": "https://mx.ebay.com/"},
+        {"action": "write", "selector": {"by": "css", "value": "input.gh-tb.ui-autocomplete-input"}, "text": "star wars lego", "wait": 5},
+        {"action": "click", "selector": {"by": "css", "value": "input#gh-btn"}, "wait": 5},
+        {"action": "extract", "table": {"by": "css", "value": "ul.srp-results.srp-grid.clearfix"}, "row": "li.s-item.s-item__pl-on-bottom", "cells": [
+            {"name": "Nombre", "selector": "span[role='heading']"},
+            {"name": "Estado", "selector": "span.SECONDARY_INFO"},
+            {"name": "Precio", "selector": "span.s-item__price"}
+        ]},
+        {"action": "click", "selector": {"by": "css", "value": "a.pagination__next"}, "wait": 5},
+        {"action": "extract", "table": {"by": "css", "value": "ul.srp-results.srp-grid.clearfix"}, "row": "li.s-item.s-item__pl-on-bottom", "cells": [
+            {"name": "Nombre", "selector": "span[role='heading']"},
+            {"name": "Estado", "selector": "span.SECONDARY_INFO"},
+            {"name": "Precio", "selector": "span.s-item__price"}
+        ]}
+    ]
+}

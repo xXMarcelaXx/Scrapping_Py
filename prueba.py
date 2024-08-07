@@ -10,7 +10,7 @@ from selenium.webdriver.common.keys import Keys
 import logging
 import pandas as pd
 import os
-from utils.json_handler import JSONHandler
+#from utils.json_handler import JSONHandler
 
 
 # Configurar el driver de Chrome
