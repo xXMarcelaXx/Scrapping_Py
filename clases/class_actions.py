@@ -29,19 +29,25 @@ class WebScrapping:
     def perform_actions(self):
         try:
             for action in self.config['actions']:
-                if action['action'] == 'get':
-                    self.driver.get(action['url'])
-                elif action['action'] == 'write':
-                    self.write(action)
-                elif action['action'] == 'click':
-                    self.click(action)
-                elif action['action'] == 'extract':
-                    data = self.extract_data(action)
-                    if data:
-                        self.all_data.extend(data)
-                time.sleep(action.get('wait', 1))  # Espera opcional entre acciones
+                self.perform_action(action)
         except Exception as e:
             logging.error(f"Error performing actions: {e}")
+
+    def perform_action(self, action):
+        try:
+            if action['action'] == 'get':
+                self.driver.get(action['url'])
+            elif action['action'] == 'write':
+                self.write(action)
+            elif action['action'] == 'click':
+                self.click(action)
+            elif action['action'] == 'extract':
+                data = self.extract_data(action)
+                if data:
+                    self.all_data.extend(data)
+            time.sleep(action.get('wait', 1))  # Espera opcional entre acciones
+        except Exception as e:
+            logging.error(f"Error performing action {action['action']}: {e}")
 
     def write(self, action):
         try:
@@ -67,11 +73,12 @@ class WebScrapping:
             table = WebDriverWait(self.driver, 20).until(
                 EC.presence_of_element_located((self.get_by(action['table']['by']), action['table']['value']))
             )
-            rows = table.find_elements(By.XPATH if action['row'].startswith('//') else By.CSS_SELECTOR, action['row'])
+            rows = table.find_elements(self.get_by(action['row']['by']), action['row']['value'])
             for row in rows:
                 row_data = {}
                 for cell in action['cells']:
-                    cell_element = row.find_element(By.XPATH if cell['selector'].startswith('//') else By.CSS_SELECTOR, cell['selector'])
+                    cell_selector = cell['selector']
+                    cell_element = row.find_element(self.get_by(cell_selector['by']), cell_selector['value'])
                     row_data[cell['name']] = cell_element.text.strip() if cell_element else None
                 data.append(row_data)
         except Exception as e:

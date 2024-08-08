@@ -9,17 +9,13 @@ class BuildData():
         self.df = pd.DataFrame(data_dict)
         logging.basicConfig(level=logging.INFO)
 
-
-
     def export_to_excel(self, file_name=None):
-        print(self.df)
         if not isinstance(self.df, pd.DataFrame):
             logging.error("self.df is not a pandas DataFrame.")
             return
         directory = self.file_path
         if not os.path.exists(directory):
             os.makedirs(directory)
-
         file_path = os.path.join(directory, file_name or self.file_name + '.xlsx')
         try:
             self.df.to_excel(file_path, index=False)
@@ -27,8 +23,9 @@ class BuildData():
         except Exception as e:
             logging.error(f"Error guardando a Excel: {e}")
 
-    def data (self):
+    def data(self):
         return self.df
+
     
 
 
